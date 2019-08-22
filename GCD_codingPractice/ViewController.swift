@@ -10,10 +10,20 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var valueOfSemaTextField: UITextField!
     
     @IBOutlet weak var apiRequest: UIButton!
-    
-    @IBOutlet weak var offsetTextField: UITextField!
+    @IBOutlet weak var cleanBtn: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    var infoArr:[LabelText] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+                guard self.infoArr.count != 0 else { return }
+                self.tableView.scrollToRow(at: IndexPath(row: self.infoArr.count - 1, section: 0), at: .bottom, animated: true)
+            }
+        }
+    }
     
     @IBOutlet weak var offsetOneRoadLabel: UILabel!
     @IBOutlet weak var offsetOneSpeedLabel: UILabel!
@@ -30,93 +40,124 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         apiRequest.addTarget(self, action: #selector(ViewController.make), for: .touchUpInside)
+        cleanBtn.addTarget(self, action: #selector(ViewController.clean), for: .touchUpInside)
+        
     }
     let group: DispatchGroup = DispatchGroup()
     
+
     
     
     @objc func make() {
         
-
+        //Group
         let queue1 = DispatchQueue(label: "queue1", attributes: .concurrent)
-        
+
         group.enter()
-        
+
         queue1.async(group: group){
-            
+
             HttpsManger.shared.getSpeed(offset: 0) { [weak self] result in
                 guard let strongSelf = self else { fatalError() }
                 switch result {
                 case .success(let data):
                     strongSelf.offsetOne = strongSelf.parseData(data: data)
-                    
+
                 case .failure(let error):
                     print(error)
                 }
                 self?.group.leave()
+                print("queue1")
             }
 
         }
-        
+
         let queue2 = DispatchQueue(label: "queue2", attributes: .concurrent)
-        
+
         group.enter()
-        
+
         queue2.async(group: group){
-            
+
             HttpsManger.shared.getSpeed(offset: 10) { [weak self] result in
                 guard let strongSelf = self else { fatalError() }
                 switch result {
                 case .success(let data):
                     strongSelf.offsetTwo = strongSelf.parseData(data: data)
-                    
+
                 case .failure(let error):
                     print(error)
                 }
                 self?.group.leave()
+                print("queue2")
             }
-            
+
         }
         let queue3 = DispatchQueue(label: "queue3", attributes: .concurrent)
-        
+
         group.enter()
-        
+
         queue3.async(group: group){
-            
+
             HttpsManger.shared.getSpeed(offset: 20) { [weak self] result in
                 guard let strongSelf = self else { fatalError() }
                 switch result {
                 case .success(let data):
                     strongSelf.offsetThree = strongSelf.parseData(data: data)
-                    
+
                 case .failure(let error):
                     print(error)
                 }
                 self?.group.leave()
+                print("queue3")
             }
-            
+
         }
-        
+
         group.notify(queue: DispatchQueue.main) {
             print("done")
             self.offsetOneRoadLabel.text = self.offsetOne?.road
             self.offsetOneSpeedLabel.text = self.offsetOne?.limit
-            
+
             self.offsetTwoRoadLabel.text = self.offsetTwo?.road
             self.offsetTwoSpeedLabel.text = self.offsetTwo?.limit
-            
+
             self.offsetThreeRoadLabel.text = self.offsetThree?.road
             self.offsetThreeSpeedLabel.text = self.offsetThree?.limit
         }
         
+        //Semaphore
+        if valueOfSemaTextField.text != "" {
+            guard let text = valueOfSemaTextField.text else { fatalError() }
+            guard let value = Int(text) else { fatalError() }
+            let semaphore = DispatchSemaphore(value: value)
+            semaphore.wait()
+            for i in 0...100 {
+                HttpsManger.shared.getSpeed(offset: i) { [weak self] result in
+                    guard let strongSelf = self else { fatalError() }
+                    switch result {
+                    case .success(let data):
+                        let lableText = strongSelf.parseData(data: data)
+                        self?.infoArr.append(lableText)
+                    case .failure(let error):
+                        print(error)
+                    }
+                    semaphore.signal()
+        }
+        
+
+//                DispatchQueue.main.sync {
+//                    self?.tableView.insertRows(at: [IndexPath(row: i, section: 0)], with: .bottom)
+//                }
+                
+            }
+            
+            
+        }
+        
+
     }
     
-    
-    func makeRequest(offset: Int) {
-        
-            }
-    
-    
+
     
     func parseData(data:Data) -> LabelText {
         var labelText = LabelText(road: "", limit: "")
@@ -128,8 +169,38 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
+        
         return labelText
     }
+    
+    @objc func clean() {
+        self.offsetOneRoadLabel.text = ""
+        self.offsetOneSpeedLabel.text = ""
+        
+        self.offsetTwoRoadLabel.text = ""
+        self.offsetTwoSpeedLabel.text = ""
+        
+        self.offsetThreeRoadLabel.text = ""
+        self.offsetThreeSpeedLabel.text = ""
+        
+        infoArr.removeAll()
+        
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return infoArr.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let info = infoArr[indexPath.row]
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell") as? TableViewCell else { fatalError() }
+        cell.roadLabel.text = info.road
+        cell.speedLabel.text = info.limit
+        return cell
+    }
+    
     
 }
 

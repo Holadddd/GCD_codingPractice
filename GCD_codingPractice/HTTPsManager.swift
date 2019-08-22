@@ -37,8 +37,6 @@ class HttpsManger {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
-        
-        
         let task = URLSession.shared.dataTask(with: request) { (data,  response, error) in
             
             

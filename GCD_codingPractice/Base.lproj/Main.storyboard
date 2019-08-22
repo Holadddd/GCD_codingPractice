@@ -104,16 +104,80 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FEA-KP-zR0">
+                                <rect key="frame" x="309" y="806" width="39" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Clean"/>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ODy-eO-qx2">
+                                <rect key="frame" x="0.0" y="494" width="414" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="9FW-yD-SlQ"/>
+                                </constraints>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="TableViewCell" id="tCr-xA-Ezj" customClass="TableViewCell" customModule="GCD_codingPractice" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="tCr-xA-Ezj" id="gFn-Cz-XFK">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5X-gc-Ijp">
+                                                    <rect key="frame" x="20" y="11" width="207" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SNg-X4-rsi">
+                                                    <rect key="frame" x="227" y="11" width="167" height="22"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="f5X-gc-Ijp" firstAttribute="width" secondItem="gFn-Cz-XFK" secondAttribute="width" multiplier="0.5" id="0r2-eq-gKf"/>
+                                                <constraint firstItem="SNg-X4-rsi" firstAttribute="bottom" secondItem="gFn-Cz-XFK" secondAttribute="bottomMargin" id="1FK-48-3BH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="f5X-gc-Ijp" secondAttribute="bottom" id="8Xj-NS-i78"/>
+                                                <constraint firstItem="SNg-X4-rsi" firstAttribute="leading" secondItem="f5X-gc-Ijp" secondAttribute="trailing" id="8m0-G7-Zrl"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="SNg-X4-rsi" secondAttribute="trailing" id="RUH-Wo-Zcy"/>
+                                                <constraint firstItem="f5X-gc-Ijp" firstAttribute="top" secondItem="gFn-Cz-XFK" secondAttribute="topMargin" id="myY-p3-uqV"/>
+                                                <constraint firstItem="SNg-X4-rsi" firstAttribute="top" secondItem="gFn-Cz-XFK" secondAttribute="topMargin" id="nP6-tn-y9x"/>
+                                                <constraint firstItem="f5X-gc-Ijp" firstAttribute="leading" secondItem="gFn-Cz-XFK" secondAttribute="leadingMargin" id="wEa-sY-3F5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="roadLabel" destination="f5X-gc-Ijp" id="WFM-ie-qBx"/>
+                                            <outlet property="speedLabel" destination="SNg-X4-rsi" id="48c-oR-iqc"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="Svb-zy-RAv"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iE3-r8-hkt"/>
+                                </connections>
+                            </tableView>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="HCD-qy-xY3">
+                                <rect key="frame" x="33" y="750" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="tHD-lh-EWF" firstAttribute="top" secondItem="TEI-wi-6Dh" secondAttribute="bottom" id="45H-G9-TLf"/>
                             <constraint firstItem="TEI-wi-6Dh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="D3l-CZ-lcD"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="TEI-wi-6Dh" secondAttribute="trailing" id="Mi0-v1-87M"/>
+                            <constraint firstItem="ODy-eO-qx2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="PaQ-Pr-4E4"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tHD-lh-EWF" secondAttribute="trailing" id="QhH-7E-Zz0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PxE-fu-epF" secondAttribute="trailing" id="U8w-mN-cTt"/>
                             <constraint firstItem="TEI-wi-6Dh" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="UAu-qE-zvb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ODy-eO-qx2" secondAttribute="trailing" id="VpF-Iv-3FS"/>
                             <constraint firstItem="PxE-fu-epF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="a5P-5L-xqj"/>
+                            <constraint firstItem="ODy-eO-qx2" firstAttribute="top" secondItem="PxE-fu-epF" secondAttribute="bottom" id="bCM-tT-GNA"/>
                             <constraint firstItem="PxE-fu-epF" firstAttribute="top" secondItem="tHD-lh-EWF" secondAttribute="bottom" id="hnj-aZ-Mif"/>
                             <constraint firstItem="tHD-lh-EWF" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="nTn-Ot-I8k"/>
                         </constraints>
@@ -121,16 +185,20 @@
                     </view>
                     <connections>
                         <outlet property="apiRequest" destination="61d-ib-04c" id="NA9-0Q-9I5"/>
+                        <outlet property="cleanBtn" destination="FEA-KP-zR0" id="YRW-0f-Zaa"/>
                         <outlet property="offsetOneRoadLabel" destination="SSf-E1-kd7" id="RCj-9Y-XFM"/>
                         <outlet property="offsetOneSpeedLabel" destination="nJC-pr-ZTe" id="CLW-yo-P9R"/>
                         <outlet property="offsetThreeRoadLabel" destination="5oq-nf-tWP" id="LdO-qx-gmT"/>
                         <outlet property="offsetThreeSpeedLabel" destination="qpj-GK-2mo" id="JYR-zn-oXR"/>
                         <outlet property="offsetTwoRoadLabel" destination="XmO-43-Apb" id="riX-y4-DgE"/>
                         <outlet property="offsetTwoSpeedLabel" destination="GYr-jX-4Dg" id="rEa-LR-JTR"/>
+                        <outlet property="tableView" destination="ODy-eO-qx2" id="uTd-bC-8CQ"/>
+                        <outlet property="valueOfSemaTextField" destination="HCD-qy-xY3" id="eVv-ip-dY3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="47.826086956521742" y="20.758928571428569"/>
         </scene>
     </scenes>
 </document>
