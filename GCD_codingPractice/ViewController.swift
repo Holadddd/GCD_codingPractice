@@ -15,6 +15,18 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var offsetTextField: UITextField!
     
+    @IBOutlet weak var offsetOneRoadLabel: UILabel!
+    @IBOutlet weak var offsetOneSpeedLabel: UILabel!
+    var offsetOne: LabelText?
+    
+    @IBOutlet weak var offsetTwoRoadLabel: UILabel!
+    @IBOutlet weak var offsetTwoSpeedLabel: UILabel!
+    var offsetTwo: LabelText?
+    
+    @IBOutlet weak var offsetThreeRoadLabel: UILabel!
+    @IBOutlet weak var offsetThreeSpeedLabel: UILabel!
+    var offsetThree: LabelText?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         apiRequest.addTarget(self, action: #selector(ViewController.make), for: .touchUpInside)
@@ -27,23 +39,74 @@ class ViewController: UIViewController {
         
 
         let queue1 = DispatchQueue(label: "queue1", attributes: .concurrent)
+        
         group.enter()
+        
         queue1.async(group: group){
-            self.makeRequest(offset: 0)
+            
+            HttpsManger.shared.getSpeed(offset: 0) { [weak self] result in
+                guard let strongSelf = self else { fatalError() }
+                switch result {
+                case .success(let data):
+                    strongSelf.offsetOne = strongSelf.parseData(data: data)
+                    
+                case .failure(let error):
+                    print(error)
+                }
+                self?.group.leave()
+            }
+
         }
+        
         let queue2 = DispatchQueue(label: "queue2", attributes: .concurrent)
+        
         group.enter()
+        
         queue2.async(group: group){
-            self.makeRequest(offset: 10)
+            
+            HttpsManger.shared.getSpeed(offset: 10) { [weak self] result in
+                guard let strongSelf = self else { fatalError() }
+                switch result {
+                case .success(let data):
+                    strongSelf.offsetTwo = strongSelf.parseData(data: data)
+                    
+                case .failure(let error):
+                    print(error)
+                }
+                self?.group.leave()
+            }
+            
         }
         let queue3 = DispatchQueue(label: "queue3", attributes: .concurrent)
+        
         group.enter()
+        
         queue3.async(group: group){
-            self.makeRequest(offset: 20)
+            
+            HttpsManger.shared.getSpeed(offset: 20) { [weak self] result in
+                guard let strongSelf = self else { fatalError() }
+                switch result {
+                case .success(let data):
+                    strongSelf.offsetThree = strongSelf.parseData(data: data)
+                    
+                case .failure(let error):
+                    print(error)
+                }
+                self?.group.leave()
+            }
+            
         }
         
         group.notify(queue: DispatchQueue.main) {
             print("done")
+            self.offsetOneRoadLabel.text = self.offsetOne?.road
+            self.offsetOneSpeedLabel.text = self.offsetOne?.limit
+            
+            self.offsetTwoRoadLabel.text = self.offsetTwo?.road
+            self.offsetTwoSpeedLabel.text = self.offsetTwo?.limit
+            
+            self.offsetThreeRoadLabel.text = self.offsetThree?.road
+            self.offsetThreeSpeedLabel.text = self.offsetThree?.limit
         }
         
     }
@@ -51,32 +114,28 @@ class ViewController: UIViewController {
     
     func makeRequest(offset: Int) {
         
-        HttpsManger.shared.getSpeed(offset: offset) { [weak self] result in
-            guard let strongSelf = self else { fatalError() }
-            switch result {
-            case .success(let data):
-                strongSelf.parseData(data: data)
-            case .failure(let error):
-                print(error)
             }
-            self?.group.leave()
-        }
-    }
     
     
     
-    func parseData(data:Data) {
-        
+    func parseData(data:Data) -> LabelText {
+        var labelText = LabelText(road: "", limit: "")
         let decoder = JSONDecoder()
         do {
             let data = try decoder.decode(SpeedDate.self, from: data)
-            print(data.result.results[0].road)
+            let info = data.result.results[0]
+            labelText = LabelText(road: info.road, limit: info.speed_limit)
         } catch {
             print(error)
         }
-        
+        return labelText
     }
     
+}
+
+struct LabelText {
+    var road: String
+    var limit: String
 }
 
 struct SpeedDate :Codable {
