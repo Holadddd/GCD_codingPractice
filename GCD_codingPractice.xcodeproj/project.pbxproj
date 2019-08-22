@@ -13,6 +13,7 @@
 		011175CD230E40CC0092604C /* GCD_codingPractice.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 011175CB230E40CC0092604C /* GCD_codingPractice.xcdatamodeld */; };
 		011175CF230E40CF0092604C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 011175CE230E40CF0092604C /* Assets.xcassets */; };
 		011175D2230E40CF0092604C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 011175D0230E40CF0092604C /* LaunchScreen.storyboard */; };
+		011175DA230E62220092604C /* HTTPsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 011175D9230E62220092604C /* HTTPsManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		011175CE230E40CF0092604C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		011175D1230E40CF0092604C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		011175D3230E40CF0092604C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		011175D9230E62220092604C /* HTTPsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPsManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				011175C4230E40CC0092604C /* AppDelegate.swift */,
 				011175C6230E40CC0092604C /* ViewController.swift */,
+				011175D9230E62220092604C /* HTTPsManager.swift */,
 				011175C8230E40CC0092604C /* Main.storyboard */,
 				011175CE230E40CF0092604C /* Assets.xcassets */,
 				011175D0230E40CF0092604C /* LaunchScreen.storyboard */,
@@ -141,6 +144,7 @@
 				011175C7230E40CC0092604C /* ViewController.swift in Sources */,
 				011175CD230E40CC0092604C /* GCD_codingPractice.xcdatamodeld in Sources */,
 				011175C5230E40CC0092604C /* AppDelegate.swift in Sources */,
+				011175DA230E62220092604C /* HTTPsManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
